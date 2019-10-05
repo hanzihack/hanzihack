@@ -1,10 +1,55 @@
 {:enums
- {:episode
+ {:tone
+  {:description "Chinese tones"
+   :values [:HIGH :RISING :FALLANDRISE :FALLING]}
+  :episode
   {:description "The episodes of the original Star Wars trilogy."
    :values [:NEWHOPE :EMPIRE :JEDI]}}
 
  :objects
- {:droid
+ {:initial {:fields {:id {:type Int}
+                     :sound {:type String}
+                     :group {:type String}
+                     :pinyin {:type String}}
+            :resolve :initial/resolve}
+
+  :actor {:fields {:id   {:type Int}
+                   :name {:type String}
+                   :pinyin {:type String}
+                   :initial_id {:type Int}
+                   :initial {:type :initial}}
+          :resolve :actor/resolve}
+
+  :final {:fields {:id {:type Int}
+                   :sound {:type String}
+                   :pinyin {:type String}}
+          :resolve :final/resolve}
+
+  :location {:fields {:id {:type Int}
+                      :name {:type String}
+                      :final_id {:type Int}
+                      :final {:type :final}}
+             :resolve :location/resolve}
+
+  :area {:fields {:id {:type Int}
+                  :name {:type String}
+                  :tone {:type Int}
+                  :pinyin {:type String}
+                  :location_id {:type Int}
+                  :location {:type :location}}
+         :resolve :area/resolve}
+
+  :character {:fields {:id {:type Int}
+                       :writing {:type String}
+                       :meaning {:type String}
+                       :initial_id {:type Int}
+                       :final_id {:type Int}
+                       :tone {:type Int}
+                       :actor {:type actor}
+                       :area {:type area}}
+              :resolve :character/resolve}
+
+  :droid
   {:fields {:primary_functions {:type (list String)}
             :id {:type Int}
             :name {:type String}
@@ -17,7 +62,20 @@
             :appears_in {:type (list :episode)}}}}
 
  :queries
- {:hero {:type (non-null :human)
+ {
+  :initials {:type (list :initial)
+             :args {:group {:type String}}
+             :resolve :initial/resolve-list}
+
+  :actors {:type (list :actor)
+           :args {:group {:type String}}
+           :resolve :actor/resolve-list}
+
+  :finals {:type (list :final)
+           :resolve :final/resolve-list}
+  :locations {:type (list :location)
+              :resolve :location/resolve-list}
+  :hero {:type (non-null :human)
          :args {:id {:type String :default-value "2001"}}
          :resolve :get-hero}
   :droid {:type :droid
