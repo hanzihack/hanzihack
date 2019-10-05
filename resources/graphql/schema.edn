@@ -64,7 +64,9 @@
  :queries
  {
   :initials {:type (list :initial)
-             :args {:group {:type String}}
+             :args {:sound {:type String}
+                    :limit {:type Int :default-value 100}
+                    :offset {:type Int :default-value 0}}
              :resolve :initial/resolve-list}
 
   :actors {:type (list :actor)

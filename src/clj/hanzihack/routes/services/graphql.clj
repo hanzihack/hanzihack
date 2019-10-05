@@ -4,6 +4,7 @@
     [com.walmartlabs.lacinia.schema :as schema]
     [com.walmartlabs.lacinia :as lacinia]
     [com.walmartlabs.lacinia.resolve :as resolve]
+    [hanzihack.marilyn.initial.graphql :as initial]
     [clojure.data.json :as json]
     [clojure.edn :as edn]
     [clojure.java.io :as io]
@@ -27,10 +28,7 @@
    :name "a"
    :pinyin "a"})
 
-(defn list-initial [ctx args value]
-  [{:id 1
-    :sound "A"
-    :pinyin "a"}])
+
 
 (defn list-actor [ctx args value]
   (println :list-actor args)
@@ -87,7 +85,7 @@
                          :character/resolve (constantly {})
 
                          ; queries
-                         :initial/resolve-list list-initial
+                         :initial/resolve-list initial/get-list
                          :actor/resolve-list   list-actor
                          :final/resolve-list   list-final
                          :location/resolve-list list-location
