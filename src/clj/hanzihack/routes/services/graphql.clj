@@ -3,6 +3,7 @@
     [com.walmartlabs.lacinia.util :refer [attach-resolvers]]
     [com.walmartlabs.lacinia.schema :as schema]
     [com.walmartlabs.lacinia :as lacinia]
+    [com.walmartlabs.lacinia.resolve :as resolve]
     [clojure.data.json :as json]
     [clojure.edn :as edn]
     [clojure.java.io :as io]
@@ -20,10 +21,9 @@
                 :appears_in ["EMPIRE" "JEDI"]}]]
     (first data)))
 
-
-(defn get-initial [ctx args value]
+(defn get-initial [{:keys [:initial_id]} args value]
   (println :get-initial args)
-  {:id 1
+  {:id initial_id
    :name "a"
    :pinyin "a"})
 
@@ -34,9 +34,11 @@
 
 (defn list-actor [ctx args value]
   (println :list-actor args)
-  [{:id 1
-    :name "actor"
-    :initial_id 2}])
+  (resolve/with-context
+    [{:id 1
+      :name "actor"
+      :initial_id 2}]
+    {:initial_id 99}))
 
 (defn list-final [ctx args value]
   [{:id 1
@@ -46,13 +48,19 @@
 (defn list-location [ctx args value]
   (print :list-location)
   [{:id 1
-    :name "(u)an"
+    :name "Esplanade"
     :final_id 3}])
 
 (defn get-actor [ctx args value]
   (println :get-actor args)
   {:id 2
    :name "get-actor"})
+
+(defn get-final [ctx args value]
+  (println :get-final args)
+  {:id 2
+   :sound "(u)an"
+   :pinyin "uan"})
 
 (comment
   (try
@@ -73,7 +81,7 @@
       (attach-resolvers {;; objects
                          :initial/resolve   get-initial
                          :actor/resolve     get-actor
-                         :final/resolve     (constantly {})
+                         :final/resolve     get-final
                          :location/resolve  (constantly {})
                          :area/resolve      (constantly {})
                          :character/resolve (constantly {})

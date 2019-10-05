@@ -10,14 +10,14 @@
  {:initial {:fields {:id {:type Int}
                      :sound {:type String}
                      :group {:type String}
-                     :pinyin {:type String}}
-            :resolve :initial/resolve}
+                     :pinyin {:type String}}}
 
   :actor {:fields {:id   {:type Int}
                    :name {:type String}
                    :pinyin {:type String}
                    :initial_id {:type Int}
-                   :initial {:type :initial}}
+                   :initial {:type :initial
+                             :resolve :initial/resolve}}
           :resolve :actor/resolve}
 
   :final {:fields {:id {:type Int}
