@@ -5,3 +5,6 @@ services:
 
 before_install:
   - docker build -t hanzihack .
+
+script:
+  - bash docker_push

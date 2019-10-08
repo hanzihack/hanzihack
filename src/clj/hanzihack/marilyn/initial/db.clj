@@ -13,5 +13,5 @@
                            :where [:and
                                    [:= :sound sound]
                                    #_[:= :group group]]})]
-     (jdbc/query *db* query)))
+     (jdbc/query *db* ["SELECT * FROM marilyn.initials"])))
 
