@@ -100,6 +100,6 @@
 
 (defn execute-request [query]
   (let [vars nil
-        context nil]
+        context {:user-id 1}]
     (-> (lacinia/execute compiled-schema query vars context)
         (json/write-str))))

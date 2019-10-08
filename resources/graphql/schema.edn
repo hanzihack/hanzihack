@@ -10,7 +10,8 @@
  {:initial {:fields {:id {:type Int}
                      :sound {:type String}
                      :group {:type String}
-                     :pinyin {:type String}}}
+                     :pinyin {:type String}
+                     :actor {:type :actor}}}
 
   :actor {:fields {:id   {:type Int}
                    :name {:type String}

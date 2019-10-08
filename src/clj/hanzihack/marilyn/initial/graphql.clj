@@ -3,5 +3,5 @@
     [hanzihack.marilyn.initial.db :as db]))
 
 (defn get-list [ctx args value]
-  (db/get-list args))
-
+  (let [user-id (:user-id ctx)]
+    (db/get-list user-id args)))

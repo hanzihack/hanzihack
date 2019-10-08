@@ -1,6 +1,6 @@
-TRUNCATE TABLE marilyn.initials;
+TRUNCATE TABLE marilyn.initials CASCADE;
 --;;
-TRUNCATE TABLE marilyn.finals;
+TRUNCATE TABLE marilyn.finals CASCADE;
 --;;
 INSERT INTO marilyn.finals(sound,pinyin)
 VALUES ('-','-'),
