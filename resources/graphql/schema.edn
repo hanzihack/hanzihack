@@ -66,8 +66,7 @@
  {
   :initials {:type (list :initial)
              :args {:sound {:type String}
-                    :limit {:type Int :default-value 100}
-                    :offset {:type Int :default-value 0}}
+                    :group {:type String}}
              :resolve :initial/resolve-list}
 
   :actors {:type (list :actor)
