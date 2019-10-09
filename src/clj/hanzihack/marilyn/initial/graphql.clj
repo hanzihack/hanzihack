@@ -3,5 +3,4 @@
     [hanzihack.marilyn.initial.db :as db]))
 
 (defn get-list [ctx args value]
-  (db/get-list args))
-
+  (db/get-list (merge args ctx)))

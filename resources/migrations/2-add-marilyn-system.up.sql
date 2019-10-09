@@ -8,7 +8,7 @@ CREATE TABLE marilyn.groups(
 );
 --;;
 INSERT INTO marilyn.groups(name)
-VALUES ('a'),('i'),('u'),('uv');
+VALUES ('a'),('i'),('u'),('ü');
 --;;
 CREATE TABLE marilyn.initials(
     id BIGSERIAL PRIMARY KEY,
