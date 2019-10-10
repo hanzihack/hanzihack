@@ -1,0 +1,12 @@
+language: ruby
+
+env:
+  - IMAGE_TAG=hanzihack/website:$TRAVIS_BUILD_NUMBER
+services:
+  - docker
+
+before_install:
+  - docker build -t $IMAGE_TAG .
+
+script:
+  - bash docker_push

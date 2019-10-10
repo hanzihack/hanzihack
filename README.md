@@ -1,5 +1,7 @@
 # HanziHack
 
+[![Build Status](https://travis-ci.com/hanzihack/hanzihack.svg?branch=master)](https://travis-ci.com/hanzihack/hanzihack)
+
 The system to help you learn Chinese words.  
 Implementation of [Marilyn Method][2]
 
