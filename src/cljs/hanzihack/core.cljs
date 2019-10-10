@@ -192,18 +192,19 @@
   (r/render [current-page] (.getElementById js/document "app")))
 
 (defn init! []
-   (accountant/configure-navigation!
-      {:nav-handler
-       (fn [path]
-           (let [match (reitit/match-by-path router path)
-                 current-page (:name (:data  match))
-                 route-params (:path-params match)]
-             (session/put! :route {:current-page (page-for current-page)
-                                   :route-params route-params})))
-       :path-exists?
-       (fn [path]
-           (boolean (reitit/match-by-path router path)))})
-   (accountant/dispatch-current!)
-   (mount-components))
+  (accountant/configure-navigation!
+     {:nav-handler
+      (fn [path]
+          (let [match (reitit/match-by-path router path)
+                current-page (:name (:data  match))
+                route-params (:path-params match)]
+            (session/put! :route {:current-page (page-for current-page)
+                                  :route-params route-params})))
+      :path-exists?
+      (fn [path]
+          (boolean (reitit/match-by-path router path)))})
+  (accountant/dispatch-current!)
+  (ajax/load-interceptors!)
+  (mount-components))
 
 
