@@ -47,6 +47,7 @@
                  [honeysql "0.9.8"]
                  [venantius/accountant "0.2.4"]
                  [reagent-utils "0.3.3"]
+                 [com.hypaer/ant-man "1.7.7"]
                  [vincit/venia "0.2.5"]]
 
   :min-lein-version "2.0.0"
