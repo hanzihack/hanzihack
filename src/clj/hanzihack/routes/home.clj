@@ -13,17 +13,15 @@
   (layout/render request "app.html"))
 
 
-(defn home-page [request]
-  (layout/render request "base.html"))
 
 
 (defn home-routes []
   [""
    {:middleware [middleware/wrap-csrf
                  middleware/wrap-formats]}
-   ["/" {:get parking-page}]
+   ["/park" {:get parking-page}]
    ["/app" {:get app-page}]
-   ["/home" {:get home-page}]
+   ["/about" {:get home-page}]
    ["/graphiql" {:get (fn [request] (layout/render request "graphiql.html"))}]
    ["/docs" {:get (fn [_]
                     (-> (response/ok (-> "docs/docs.md" io/resource slurp))

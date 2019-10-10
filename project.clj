@@ -45,6 +45,8 @@
                  [selmer "1.12.14"]
                  [thheller/shadow-cljs "2.8.39" :scope "provided"]
                  [honeysql "0.9.8"]
+                 [venantius/accountant "0.2.4"]
+                 [reagent-utils "0.3.3"]
                  [vincit/venia "0.2.5"]]
 
   :min-lein-version "2.0.0"

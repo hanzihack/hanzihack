@@ -8,81 +8,108 @@
     [markdown.core :refer [md->html]]
     [hanzihack.ajax :as ajax]
     [hanzihack.events]
-    [reitit.core :as reitit]
+    [reagent.session :as session]
+    [reitit.frontend :as reitit]
+    [accountant.core :as accountant]
     [clojure.string :as string])
   (:import goog.History))
 
-(defn nav-link [uri title page]
-  [:a.navbar-item
-   {:href   uri
-    :class (when (= page @(rf/subscribe [:page])) :is-active)}
-   title])
-
-(defn navbar []
-  (r/with-let [expanded? (r/atom false)]
-    [:nav.navbar.is-info>div.container
-     [:div.navbar-brand
-      [:a.navbar-item {:href "/" :style {:font-weight :bold}} "hanzihack"]
-      [:span.navbar-burger.burger
-       {:data-target :nav-menu
-        :on-click #(swap! expanded? not)
-        :class (when @expanded? :is-active)}
-       [:span][:span][:span]]]
-     [:div#nav-menu.navbar-menu
-      {:class (when @expanded? :is-active)}
-      [:div.navbar-start
-       [nav-link "#/" "Home" :home]
-       [nav-link "#/about" "About" :about]]]]))
-
-(defn about-page []
-  [:section.section>div.container>div.content
-   [:img {:src "/img/warning_clojure.png"}]])
-
-(defn home-page []
-  [:section.section>div.container>div.content
-   (when-let [docs @(rf/subscribe [:docs])]
-     [:div {:dangerouslySetInnerHTML {:__html (md->html docs)}}])])
-
-(def pages
-  {:home #'home-page
-   :about #'about-page})
-
-(defn page []
-  [:div
-   [navbar]
-   [(pages @(rf/subscribe [:page]))]])
-
-;; -------------------------
-;; Routes
-
 (def router
   (reitit/router
-    [["/" :home]
+    [["/" :index]
+     ["/items"
+      ["" :items]
+      ["/:item-id" :item]]
      ["/about" :about]]))
 
+(defn path-for [route & [params]]
+  (if params
+    (:path (reitit/match-by-name router route params))
+    (:path (reitit/match-by-name router route))))
+
 ;; -------------------------
-;; History
-;; must be called after routes have been defined
-(defn hook-browser-navigation! []
-  (doto (History.)
-    (events/listen
-      HistoryEventType/NAVIGATE
-      (fn [event]
-        (let [uri (or (not-empty (string/replace (.-token event) #"^.*#" "")) "/")]
-          (rf/dispatch
-            [:navigate (reitit/match-by-path router uri)]))))
-    (.setEnabled true)))
+;; Page components
+
+(defn home-page []
+  (fn []
+    [:span.main
+     [:h1 "Welcome to {{name}}"]
+     [:ul
+      [:li [:a {:href (path-for :items)} "Items of {{name}}"]]
+      [:li [:a {:href "/broken/link"} "Broken link"]]]]))
+
+
+
+(defn items-page []
+  (fn []
+    [:span.main
+     [:h1 "The items of {{name}}"]
+     [:ul (map (fn [item-id]
+                 [:li {:name (str "item-" item-id) :key (str "item-" item-id)}
+                  [:a {:href (path-for :item {:item-id item-id})} "Item: " item-id]])
+               (range 1 10))]]))
+
+
+(defn item-page []
+  (fn []
+    (let [routing-data (session/get :route)
+          item (get-in routing-data [:route-params :item-id])]
+      [:span.main
+       [:h1 (str "Item " item " of {{name}}")]
+       [:p [:a {:href (path-for :items)} "Back to the list of items"]]])))
+
+
+(defn about-page []
+  (fn [] [:span.main
+          [:h1 "About {{name}}"]]))
+
+(defn not-found-page []
+  (fn [] [:span.main
+          [:h1 "You seem lost"]]))
+
+
+;; -------------------------
+;; Translate routes -> page components
+
+(defn page-for [route]
+  (case route
+    :index #'home-page
+    :about #'about-page
+    :items #'items-page
+    :item #'item-page
+    #'not-found-page))
+
+
+;; -------------------------
+;; Page mounting component
+
+(defn current-page []
+  (fn []
+    (let [page (:current-page (session/get :route))]
+      [:div
+       [:header
+        [:p [:a {:href (path-for :index)} "Home"] " | "
+         [:a {:href (path-for :about)} "About {{name}}"]]]
+       [page]])))
+
 
 ;; -------------------------
 ;; Initialize app
-(defn ^:dev/after-load mount-components []
-  (rf/clear-subscription-cache!)
-  (r/render [#'page] (.getElementById js/document "app")))
+
+(defn mount-root []
+  (r/render [current-page] (.getElementById js/document "app")))
 
 (defn init! []
-  (rf/dispatch-sync [:navigate (reitit/match-by-name router :home)])
-  
-  (ajax/load-interceptors!)
-  (rf/dispatch [:fetch-docs])
-  (hook-browser-navigation!)
-  (mount-components))
+   (accountant/configure-navigation!
+      {:nav-handler
+       (fn [path]
+           (let [match (reitit/match-by-path router path)
+                 current-page (:name (:data  match))
+                 route-params (:path-params match)]
+             (session/put! :route {:current-page (page-for current-page)
+                                   :route-params route-params})))
+       :path-exists?
+       (fn [path]
+           (boolean (reitit/match-by-path router path)))})
+   (accountant/dispatch-current!)
+   (mount-root))

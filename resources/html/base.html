@@ -6,8 +6,7 @@
 <head>
     <base href="../../">
     <meta charset="utf-8" />
-    <title>Metronic | Empty Page</title>
-    <meta name="description" content="Page with empty content">
+    <title>{{title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!--begin::Fonts -->
@@ -349,8 +348,7 @@
                     <div class="kt-subheader   kt-grid__item" id="kt_subheader">
                         <div class="kt-container ">
                             <div class="kt-subheader__main">
-                                <h3 class="kt-subheader__title">
-                                    Empty Page </h3>
+                                <h3 class="kt-subheader__title">{{header}}</h3>
                             </div>
                             <div class="kt-subheader__toolbar">
                                 <div class="kt-subheader__wrapper">
@@ -421,7 +419,8 @@
 
                     <!-- begin:: Content -->
                     <div class="kt-container  kt-grid__item kt-grid__item--fluid">
-                        Content goes here... </div>
+                        <div id="app">loading...</div>
+                    </div>
 
                     <!-- end:: Content -->
                 </div>
@@ -1015,6 +1014,12 @@
 <!--<script src="assets/js/pages/dashboard.js" type="text/javascript"></script>-->
 
 <!--end::Page Scripts -->
+
+
+<script type="text/javascript">
+    var csrfToken = "{{csrf-token}}";
+</script>
+{% script "/js/app.js" %}
 </body>
 
 <!-- end::Body -->
