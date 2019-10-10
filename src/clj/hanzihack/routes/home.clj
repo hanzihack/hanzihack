@@ -21,7 +21,6 @@
                  middleware/wrap-formats]}
    ["/park" {:get parking-page}]
    ["/app" {:get app-page}]
-   ["/about" {:get home-page}]
    ["/graphiql" {:get (fn [request] (layout/render request "graphiql.html"))}]
    ["/docs" {:get (fn [_]
                     (-> (response/ok (-> "docs/docs.md" io/resource slurp))
