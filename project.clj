@@ -47,7 +47,7 @@
                  [honeysql "0.9.8"]
                  [venantius/accountant "0.2.4"]
                  [reagent-utils "0.3.3"]
-                 [com.hypaer/ant-man "1.7.7"]
+                 [syn-antd "1.0.4"]
                  [vincit/venia "0.2.5"]]
 
   :min-lein-version "2.0.0"
@@ -81,6 +81,7 @@
   
   :npm-deps [[shadow-cljs "2.8.39"]
              [create-react-class "15.6.3"]
+             [antd "3.23.6"]
              [react "16.8.6"]
              [react-dom "16.8.6"]]
 

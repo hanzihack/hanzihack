@@ -8,6 +8,12 @@
     [markdown.core :refer [md->html]]
     [hanzihack.ajax :as ajax]
     [hanzihack.events]
+
+    [syn-antd.button :as button]
+    [syn-antd.input :as input]
+    [syn-antd.tag :refer [tag]]
+    [syn-antd.table :refer [table table-column table-column-group]]
+
     [reagent.session :as session]
     [reitit.frontend :as reitit]
     [accountant.core :as accountant]
@@ -140,12 +146,39 @@
      [:div {:class "kt-widget__footer"}
       [:button {:type "button", :class "btn btn-label-danger btn-lg btn-upper"} "write message"]]]]])
 
+
+(def cols
+  [
+   {:title "Name"
+    :dataIndex "name"
+    :key "name"
+    :render (fn [t]
+              (r/as-element
+                [:a {:href t} t]))}
+   {:title "Age"
+    :dataIndex "age"
+    :key "age"}])
+
+(def data
+  (for [i (range 500)]
+   {:key i
+    :name "Ziko"
+    :age (str (* i 10))}))
+
+
 (defn actors-page []
   (fn []
     [:div.main
      [:h1 "Actors"]
      [:div
+      [:div.row>div.col-md
+       [table {:columns cols :dataSource data}]]
       [:div.row
+       [button/button
+        {:type     "primary"
+         :on-click #(println "hello world")}
+        "Reset input to 'Test'"]
+
        [:div.col-md-3
         [actor-card]]
        [:div.col-md-3
