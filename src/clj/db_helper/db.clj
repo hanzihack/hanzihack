@@ -26,12 +26,6 @@
   (if-not (str/blank? val)
     [:like col (sql/raw ["'%'||'" val "'||'%'"])]))
 
-(defn where [query clauses]
-  (if-not (some some? clauses)
-    query
-    (merge query
-           {:where (cons :and clauses)})))
-  
 
 (comment
   (count-status nil "table1")
