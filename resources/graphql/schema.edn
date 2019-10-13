@@ -1,10 +1,7 @@
 {:enums
  {:tone
   {:description "Chinese tones"
-   :values [:HIGH :RISING :FALLANDRISE :FALLING]}
-  :episode
-  {:description "The episodes of the original Star Wars trilogy."
-   :values [:NEWHOPE :EMPIRE :JEDI]}}
+   :values [:HIGH :RISING :FALLANDRISE :FALLING]}}
 
  :objects
  {:initial {:fields {:id {:type Int}
@@ -15,7 +12,6 @@
 
   :actor {:fields {:id   {:type Int}
                    :name {:type String}
-                   :pinyin {:type String}
                    :initial_id {:type Int}
                    :initial {:type :initial
                              :resolve :initial/resolve}}
@@ -48,19 +44,8 @@
                        :actor {:type actor
                                :resolve :actor/resolve}
                        :area {:type area
-                              :resolve :area/resolve}}}
+                              :resolve :area/resolve}}}}
 
-  :droid
-  {:fields {:primary_functions {:type (list String)}
-            :id {:type Int}
-            :name {:type String}
-            :appears_in {:type (list :episode)}}}
-
-  :human
-  {:fields {:id {:type Int}
-            :name {:type String}
-            :home_planet {:type String}
-            :appears_in {:type (list :episode)}}}}
 
  :queries
  {
@@ -76,10 +61,4 @@
   :finals {:type (list :final)
            :resolve :final/resolve-list}
   :locations {:type (list :location)
-              :resolve :location/resolve-list}
-  :hero {:type (non-null :human)
-         :args {:id {:type String :default-value "2001"}}
-         :resolve :get-hero}
-  :droid {:type :droid
-          :args {:name {:type String}}
-          :resolve :get-droid}}}
+              :resolve :location/resolve-list}}}

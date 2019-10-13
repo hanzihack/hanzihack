@@ -48,7 +48,7 @@
                  [venantius/accountant "0.2.4"]
                  [reagent-utils "0.3.3"]
                  [syn-antd "1.0.4"]
-                 [vincit/venia "0.2.5"]]
+                 [district0x/graphql-query "1.0.6"]]
 
   :min-lein-version "2.0.0"
   
