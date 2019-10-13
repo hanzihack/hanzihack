@@ -4,7 +4,7 @@ CREATE SCHEMA marilyn;
 CREATE TABLE marilyn.groups(
     id BIGSERIAL PRIMARY KEY,
     name TEXT UNIQUE,
-    created_at TIMESTAMPTZ
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 --;;
 INSERT INTO marilyn.groups(name)
@@ -15,29 +15,20 @@ CREATE TABLE marilyn.initials(
     sound TEXT,
     "group" TEXT REFERENCES marilyn.groups(name),
     pinyin TEXT,
-    created_at TIMESTAMPTZ
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
---;;
-INSERT INTO marilyn.initials(sound,"group",pinyin)
-VALUES ('p','a','p'),
-       ('p','i','pi');
 --;;
 CREATE TABLE marilyn.finals(
     id BIGSERIAL PRIMARY KEY,
     sound TEXT,
     pinyin TEXT,
-    created_at TIMESTAMPTZ
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
---;;
-INSERT INTO marilyn.finals(sound,pinyin)
-VALUES ('-','-'),
-       ('a','a'),
-       ('e','e');
 --;;
 CREATE TABLE marilyn.tones(
     id BIGSERIAL PRIMARY KEY,
     name TEXT,
-    created_at TIMESTAMPTZ
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 --;;
 INSERT INTO marilyn.tones(id,name)
@@ -53,7 +44,7 @@ CREATE TABLE marilyn.character(
     initial_id INT REFERENCES marilyn.initials(id),
     final_id INT REFERENCES marilyn.finals(id),
     tone INT REFERENCES marilyn.tones(id),
-    created_at TIMESTAMPTZ
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 --;;
 -- INSERT INTO marilyn.character(writing,meaning,initial_id,final_id,tone)

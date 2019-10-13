@@ -3,5 +3,5 @@ CREATE TABLE marilyn.actors (
     name TEXT,
     initial_id BIGINT REFERENCES marilyn.initials(id),
     user_id BIGINT REFERENCES public.users(id),
-    created_at TIMESTAMPTZ
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
