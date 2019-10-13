@@ -26,7 +26,9 @@
      ["/items"
       ["" :items]
       ["/:item-id" :item]]
-     ["/actors" :actors]]))
+     ["/actors"
+      ["" :actors]
+      ["/:actor-id" :actor]]]))
 
 (defn path-for [route & [params]]
   (if params
@@ -64,100 +66,37 @@
        [:h1 (str "Item " item " of {{name}}")]
        [:p [:a {:href (path-for :items)} "Back to the list of items"]]])))
 
-(defn card []
- [:div {:class "kt-portlet kt-portlet--height-fluid"}
-  [:div {:class "kt-portlet__head kt-portlet__head--noborder"}
-   [:div {:class "kt-portlet__head-label"}
-    [:h3 {:class "kt-portlet__head-title"}]]
-   [:div {:class "kt-portlet__head-toolbar"}
-    [:a {:href "#", :class "btn btn-icon", :data-toggle "dropdown"}
-     [:i {:class "flaticon-more-1 kt-font-brand"}]]
-    [:div {:class "dropdown-menu dropdown-menu-right"}
-     [:ul {:class "kt-nav"}
-      [:li {:class "kt-nav__item"}
-       [:a {:href "#", :class "kt-nav__link"}
-        [:i {:class "kt-nav__link-icon flaticon2-line-chart"}]
-        [:span {:class "kt-nav__link-text"} "Reports"]]]
-      [:li {:class "kt-nav__item"}
-       [:a {:href "#", :class "kt-nav__link"}
-        [:i {:class "kt-nav__link-icon flaticon2-send"}]
-        [:span {:class "kt-nav__link-text"} "Messages"]]]
-      [:li {:class "kt-nav__item"}
-       [:a {:href "#", :class "kt-nav__link"}
-        [:i {:class "kt-nav__link-icon flaticon2-pie-chart-1"}]
-        [:span {:class "kt-nav__link-text"} "Charts"]]]
-      [:li {:class "kt-nav__item"}
-       [:a {:href "#", :class "kt-nav__link"}
-        [:i {:class "kt-nav__link-icon flaticon2-avatar"}]
-        [:span {:class "kt-nav__link-text"} "Members"]]]
-      [:li {:class "kt-nav__item"}
-       [:a {:href "#", :class "kt-nav__link"}
-        [:i {:class "kt-nav__link-icon flaticon2-settings"}]
-        [:span {:class "kt-nav__link-text"} "Settings"]]]]]]]
-  [:div {:class "kt-portlet__body"}
-   [:div {:class "kt-widget kt-widget--user-profile-2"}
-    [:div {:class "kt-widget__head"}
-     [:div {:class "kt-widget__media"}
-      [:img {:class "kt-widget__img kt-hidden-", :src "assets/media/users/300_19.jpg", :alt "image"}]
-      [:div {:class "kt-widget__pic kt-widget__pic--danger kt-font-danger kt-font-boldest  kt-hidden"}]]
-     [:div {:class "kt-widget__info"}
-      [:a {:href "#", :class "kt-widget__username"} "Charlie Stone"]
-      [:span {:class "kt-widget__desc"} "PR Manager"]]]
-    [:div {:class "kt-widget__body"}
-     [:div {:class "kt-widget__section"} "Lorem ipsum dolor sit amet "
-      [:a {:href "#", :class "kt-font-brand kt-link kt-font-transform-u kt-font-bold"} " #xrs-23pq"]", sed"
-      [:b "USD342/Annual"]" doloremagna"]
-     [:div {:class "kt-widget__item"}
-      [:div {:class "kt-widget__contact"}
-       [:span {:class "kt-widget__label"} "Email:"]
-       [:a {:href "#", :class "kt-widget__data"} "charlie@studiovoila.com"]]
-      [:div {:class "kt-widget__contact"}
-       [:span {:class "kt-widget__label"} "Phone:"]
-       [:a {:href "#", :class "kt-widget__data"} "22(43)64534621"]]
-      [:div {:class "kt-widget__contact"}
-       [:span {:class "kt-widget__label"} "Location:"]
-       [:span {:class "kt-widget__data"} "Italy"]]]]
-    [:div {:class "kt-widget__footer"}
-     [:button {:type "button", :class "btn btn-label-danger btn-lg btn-upper"} "write message"]]]]])
 
-(defn actor-card []
-  [:div {:class "kt-portlet kt-portlet--height-fluid"}
-   [:div {:class "kt-portlet__head kt-portlet__head--noborder"}
-    [:div {:class "kt-portlet__head-label"}
-     [:h3 {:class "kt-portlet__head-title"}]]]
-   [:div {:class "kt-portlet__body"}
-    [:div {:class "kt-widget kt-widget--user-profile-2"}
-     [:div {:class "kt-widget__head"}
-      [:div {:class "kt-widget__info"}
-       [:a {:href "#", :class "kt-widget__username"} "Charlie Stone"]
-       [:span {:class "kt-widget__desc"} "PR Manager"]]]
-     [:div {:class "kt-widget__body"}
-      [:div {:class "kt-widget__section"} "Lorem ipsum dolor sit amet "]
-      [:div {:class "kt-widget__item"}
-       [:div {:class "kt-widget__contact"}
-        [:span {:class "kt-widget__label"} "Email:"]
-        [:a {:href "#", :class "kt-widget__data"} "charlie@studiovoila.com"]]
-       [:div {:class "kt-widget__contact"}
-        [:span {:class "kt-widget__label"} "Phone:"]
-        [:a {:href "#", :class "kt-widget__data"} "22(43)64534621"]]
-       [:div {:class "kt-widget__contact"}
-        [:span {:class "kt-widget__label"} "Location:"]
-        [:span {:class "kt-widget__data"} "Italy"]]]]
-     [:div {:class "kt-widget__footer"}
-      [:button {:type "button", :class "btn btn-label-danger btn-lg btn-upper"} "write message"]]]]])
+(defn render [d]
+  (if d
+    (let [{:keys [id group pinyin actor]} (js->clj d :keywordize-keys true)]
+      (r/as-element [:div
+                     [:a {:href (str "/actors/" id)} pinyin]
+                     [:div {} (str actor)]]))
+    (r/as-element [:div "-"])))
 
 
 (def cols
   [
-   {:title "Name"
-    :dataIndex "name"
-    :key "name"
-    :render (fn [t]
-              (r/as-element
-                [:a {:href t} t]))}
-   {:title "Age"
-    :dataIndex "age"
-    :key "age"}])
+   {:title "Sound"
+    :dataIndex "sound"
+    :key "sound"}
+   {:title "Group A"
+    :dataIndex "a"
+    :key "a"
+    :render render}
+   {:title "Group I"
+    :dataIndex "i"
+    :render render
+    :key "i"}
+   {:title "Group U"
+    :dataIndex "u"
+    :render render
+    :key "u"}
+   {:title "Group UV"
+    :dataIndex "ü"
+    :render render
+    :key "ü"}])
 
 (def data
   (for [i (range 500)]
@@ -167,24 +106,30 @@
 
 
 (defn actors-page []
-  (fn []
-    [:div.main
-     [:h1 "Actors"]
-     [:div
-      [:div.row>div.col-md
-       [table {:columns cols :dataSource data}]]
-      [:div.row
-       [button/button
-        {:type     "primary"
-         :on-click #(println "hello world")}
-        "Reset input to 'Test'"]
+  (rf/dispatch [:initial/fetch-table])
+  (let [data (rf/subscribe [:initial/table])]
+    (fn []
+      [:div.main
+       [:h1 "Actors"]
+       [:div
+        [:div.row
+         [:div.col-md
+           [table {:columns cols
+                   :dataSource @data
+                   :pagination {:pageSize 100}}]]]
+        [:div.row
+         [button/button
+          {:type     "primary"
+           :on-click #(println "hello world")}
+          "Reset input to 'Test'"]]]])))
 
-       [:div.col-md-3
-        [actor-card]]
-       [:div.col-md-3
-        [card]]
-       [:div.col-md-3
-        [card]]]]]))
+(defn actor-page []
+  (fn []
+    (let [routing-data (session/get :route)
+          actor-id (get-in routing-data [:route-params :actor-id])]
+      [:span.main
+       [:h1 (str "Actor " actor-id)]
+       [:p [:a {:href (path-for :actors)} "Back to the list of items"]]])))
 
 
 (defn not-found-page []
@@ -199,6 +144,7 @@
   (case route
     :index #'home-page
     :actors #'actors-page
+    :actor #'actor-page
     :items #'items-page
     :item #'item-page
     #'not-found-page))
