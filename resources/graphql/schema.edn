@@ -12,6 +12,7 @@
 
   :actor {:fields {:id   {:type Int}
                    :name {:type String}
+                   :image {:type String}
                    :initial_id {:type Int}
                    :initial {:type :initial
                              :resolve :initial/resolve}}

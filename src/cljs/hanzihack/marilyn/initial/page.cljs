@@ -15,10 +15,16 @@
 
 (defn render [d]
   (if d
-    (let [{:keys [id group pinyin actor]} (js->clj d :keywordize-keys true)]
-      (r/as-element [:div
-                     [:a {:href (str "/actors/" id)} pinyin]
-                     [:div {} (str actor)]]))
+    (let [{:keys [id group pinyin actor]} (js->clj d :keywordize-keys true)
+          {:keys [image]} actor]
+      (r/as-element [:div.row
+                     [:div.col-md-3
+                       [:span.kt-media.kt-margin-r-5.kt-margin-t-5
+                        [:img {:src image
+                               :alt pinyin}]]]
+                     [:div.col-md-9
+                       [:a {:href (str "/actors/" id)} pinyin]
+                       [:div (:name actor)]]]))
     (r/as-element [:div "-"])))
 
 (def cols
@@ -54,20 +60,22 @@
   (let [data (rf/subscribe [:initial/table :items])]
     (fn []
       [:div.main
-       [:h1 "Actors"]
-       [:div
-        [:div.row
-         [:div.col-md
-          [table {:columns cols
-                  :dataSource (:items @data)
-                  :loading (:loading @data)
-                  :pagination {:pageSize 100
-                               :hideOnSinglePage true}}]]]
-        [:div.row
-         [button/button
-          {:type     "primary"
-           :on-click #(println "hello world")}
-          "Reset input to 'Test'"]]]])))
+       [:div.kt-portlet
+         [:div.kt-portlet__body
+           [:h1 "Actors"]
+           [:div
+            [:div.row
+             [:div.col-md
+              [table {:columns cols
+                      :dataSource (:items @data)
+                      :loading (:loading @data)
+                      :pagination {:pageSize 100
+                                   :hideOnSinglePage true}}]]]
+            [:div.row
+             [button/button
+              {:type     "primary"
+               :on-click #(println "hello world")}
+              "Reset input to 'Test'"]]]]]])))
 
 (defn actor-page []
   (fn []

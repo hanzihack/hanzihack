@@ -75,7 +75,7 @@
      :http-xhrio {:method          :post
                   :uri             "/api/graphql"
                   :headers         {:content-type "application/graphql"}
-                  :body            "query getInitialTables{initials:initials{...initialWithActor}} fragment initialWithActor on initial{id,sound,group,pinyin,actor{id,name}}"
+                  :body            "query getInitialTables{initials:initials{...initialWithActor}} fragment initialWithActor on initial{id,sound,group,pinyin,actor{id,name,image}}"
                   :response-format (ajax/json-response-format {:keywords? true})
                   :on-success      [:initial/set-table]}}))
 
