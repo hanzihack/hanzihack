@@ -22,7 +22,7 @@ VALUES ('∅', 'a', ''),
      ('b', 'i', 'bi'),
      ('p', 'i', 'pi'),
      ('m', 'i', 'mi'),
-     ('f', 'i', 'fi'),
+--      ('f', 'i', 'fi'), -- Serge said this will never happen
      ('d', 'i', 'di'),
      ('t', 'i', 'ti'),
      ('n', 'i', 'ni'),
