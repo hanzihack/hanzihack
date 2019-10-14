@@ -6,6 +6,12 @@
 ;;dispatchers
 
 (rf/reg-event-db
+  :init-db
+  (fn [db [_ route]]
+    {:initials {:loading false
+                :items   nil}}))
+
+(rf/reg-event-db
   :navigate
   (fn [db [_ route]]
     (assoc db :route route)))
@@ -58,12 +64,15 @@
 (rf/reg-event-db
   :initial/set-table
   (fn [db [_ table]]
-    (assoc db :initials (get-in table [:data :initials]))))
+    (assoc db :initials {:loading false
+                         :items (get-in table [:data :initials])})))
 
 (rf/reg-event-fx
   :initial/fetch-table
-  (fn [_ _]
-    {:http-xhrio {:method          :post
+  (fn [{:keys [db] :as cofx} _]
+    {:db         (assoc db :initials {:loading true
+                                      :items ()})
+     :http-xhrio {:method          :post
                   :uri             "/api/graphql"
                   :headers         {:content-type "application/graphql"}
                   :body            "query getInitialTables{initials:initials{...initialWithActor}} fragment initialWithActor on initial{id,sound,group,pinyin,actor{id,name}}"
@@ -73,12 +82,18 @@
 
 (rf/reg-sub
   :initial/table
-  (fn [db _]
-    (let [initials (get-in db [:initials])]
-      (vals
-        (sort
-          (apply merge-with merge
-           (for [[sound [group data]] (map (juxt (comp keyword :sound) (fn [e] [((comp keyword :group) e) e])) initials)]
-            {sound {:sound sound
-                    group data}})))))))
+  (fn [db [_ arg]]
+    (println :arg arg)
+    (let [{:keys [loading items]} (get-in db [:initials])]
+      {:loading loading
+       :items (vals
+                (sort
+                  (apply merge-with merge
+                   (for [[sound [group data]] (map (juxt (comp keyword :sound) (fn [e] [((comp keyword :group) e) e])) items)]
+                    {sound {:sound sound
+                            :key sound
+                            group data}}))))})))
 
+
+(comment
+  @(rf/subscribe [:initial/table]))
