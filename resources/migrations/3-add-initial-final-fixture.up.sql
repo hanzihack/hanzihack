@@ -49,27 +49,27 @@ VALUES ('∅', 'a', ''),
      ('z', 'u', 'zu'),
      ('c', 'u', 'cu'),
      ('s', 'u', 'su'),
-     ('∅', 'ü', 'y'),
+     ('∅', 'ü', 'yu'),
      ('n', 'ü', 'nü'),
      ('l', 'ü', 'lü'),
      ('j', 'ü', 'jü'),
      ('q', 'ü', 'qü'),
-     ('x', 'ü', 'xü')
-ON CONFLICT DO NOTHING;
+     ('x', 'ü', 'xü');
+
 --;;
-INSERT INTO marilyn.finals(sound,pinyin)
-VALUES  ('-','-'),
-        ('i', 'i'),
-        ('a', 'a'),
-        ('e', 'e'),
-        ('ê', 'ê'),
-        ('ai', 'ai'),
-        ('ei', 'ei'),
-        ('ao', 'ao'),
-        ('ou', 'ou'),
-        ('an', 'an'),
-        ('en', 'en'),
-        ('ang', 'ang'),
-        ('eng', 'eng'),
-        ('er', 'er')
-ON CONFLICT DO NOTHING;
+INSERT INTO marilyn.finals(sound,pinyin,pinyin_compact)
+VALUES  ('-', '-', null),
+        ('i', 'i', null),
+        ('a', 'a', null),
+        ('e', 'e', null),
+        ('ê', 'ê', null),
+        ('ai', 'ai', null),
+        ('ei', 'ei', null),
+        ('ao', 'ao', null),
+        ('ou', 'ou', null),
+        ('an', 'an', null),
+        ('en', 'en', 'n'),
+        ('ang', 'ang', null),
+        ('eng', 'eng', 'ng'),
+        ('er', 'er', null);
+

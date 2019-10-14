@@ -22,6 +22,7 @@ CREATE TABLE marilyn.finals(
     id BIGSERIAL PRIMARY KEY,
     sound TEXT,
     pinyin TEXT,
+    pinyin_compact TEXT,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 --;;
