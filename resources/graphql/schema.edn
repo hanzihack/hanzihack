@@ -22,7 +22,6 @@
                    :sound {:type String}
                    :pinyin {:type String}
                    :pinyin_compact {:type String}
-                   :location_id {:type Int}
                    :location {:type :location}}}
 
   :location {:fields {:id {:type Int}
