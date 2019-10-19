@@ -20,17 +20,22 @@
 
   :final {:fields {:id {:type Int}
                    :sound {:type String}
-                   :pinyin {:type String}}}
+                   :pinyin {:type String}
+                   :pinyin_compact {:type String}
+                   :location_id {:type Int}
+                   :location {:type :location}}}
 
   :location {:fields {:id {:type Int}
                       :name {:type String}
+                      :image {:type String}
                       :final_id {:type Int}
                       :final {:type :final
-                              :resolve :final/resolve}}}
+                              :resolve :final/resolve}
+                      :areas {:type (list :area)}}}
 
   :area {:fields {:id {:type Int}
                   :name {:type String}
-                  :tone {:type Int}
+                  :tone {:type :tone}
                   :pinyin {:type String}
                   :location_id {:type Int}
                   :location {:type :location
@@ -61,5 +66,6 @@
 
   :finals {:type (list :final)
            :resolve :final/resolve-list}
+
   :locations {:type (list :location)
               :resolve :location/resolve-list}}}
