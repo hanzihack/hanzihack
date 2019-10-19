@@ -12,6 +12,15 @@
      (source/from-system-props)
      (source/from-env)]))
 
+(defn port []
+  (:port env))
+
+(defn nrepl-bind []
+  (:nrep-bind env))
+
+(defn nrepl-port []
+  (:nrep-port env))
 
 (defn database-url []
   (:database-url env))
+
