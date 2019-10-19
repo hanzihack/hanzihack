@@ -40,7 +40,8 @@ VALUES (1,'High'),
 --;;
 CREATE TABLE marilyn.character(
     id BIGSERIAL PRIMARY KEY,
-    writing TEXT,
+    writing TEXT NOT NULL,
+    pinyin TEXT NOT NULL ,
     meaning TEXT,
     initial_id INT REFERENCES marilyn.initials(id),
     final_id INT REFERENCES marilyn.finals(id),
