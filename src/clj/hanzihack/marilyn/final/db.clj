@@ -25,10 +25,6 @@
                                                :from [:marilyn.areas]
                                                :group-by [:location_id]} :a] [:= :l.id :a.location_id]]} :l]
                                [:= :f.id :l.final_id]]}))]
-                   
 
-    (prn (sql/format query))
     (jdbc/query *db* query)))
-
-(comment (get-list {:user-id 1}))
 

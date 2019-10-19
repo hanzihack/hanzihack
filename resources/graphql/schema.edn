@@ -35,7 +35,7 @@
 
   :area {:fields {:id {:type Int}
                   :name {:type String}
-                  :tone {:type :tone}
+                  :tone_id {:type Int}
                   :pinyin {:type String}
                   :location_id {:type Int}
                   :location {:type :location
