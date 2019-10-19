@@ -6,6 +6,7 @@
     [com.walmartlabs.lacinia.resolve :as resolve]
     [graphql-query.core :refer [graphql-query]]
     [hanzihack.marilyn.initial.graphql :as initial]
+    [hanzihack.marilyn.final.graphql :as final]
     [clojure.data.json :as json]
     [clojure.edn :as edn]
     [clojure.java.io :as io]
@@ -67,7 +68,7 @@
                          ; queries
                          :initial/resolve-list initial/get-list
                          :actor/resolve-list   list-actor
-                         :final/resolve-list   list-final
+                         :final/resolve-list   final/get-list
                          :location/resolve-list list-location})
 
       schema/compile))
