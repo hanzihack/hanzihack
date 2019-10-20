@@ -50,8 +50,7 @@
                                :resolve :actor/resolve}
                        :area {:type area
                               :resolve :area/resolve}}}
-  :user {:fields {:id {:type Int}
-                  :email {:type String}
+  :user {:fields {:email {:type String}
                   :name {:type String}
                   :photo {:type String}}}}
 
@@ -73,11 +72,13 @@
               :resolve :location/resolve-list}
 
   ;; user
-  :facebook_login {:type :user
-                   :args {:token {:type String}
-                          :name {:type String}
-                          :email {:type String}
-                          :photo {:type String}}
-                   :resolve :facebook/login}
   :user {:type :user
-         :resolve :user/me}}}
+         :resolve :user/me}}
+ :mutations
+ {
+  :facebook_login {:type :user
+                   :args {:access_token {:type String}}
+                   :resolve :facebook/login}}}
+
+
+
