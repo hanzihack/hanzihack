@@ -52,7 +52,7 @@
                               :resolve :area/resolve}}}
   :user {:fields {:email {:type String}
                   :name {:type String}
-                  :photo {:type String}}}}
+                  :picture {:type String}}}}
 
  :queries
  {

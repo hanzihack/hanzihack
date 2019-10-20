@@ -12,3 +12,7 @@
                                      :access_token access-token}})))
 
 
+
+(comment
+  (get-in (retrieve "token")
+          [:picture :data :url]))

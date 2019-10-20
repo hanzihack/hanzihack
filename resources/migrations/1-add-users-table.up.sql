@@ -1,11 +1,11 @@
 CREATE TABLE users(
     id BIGSERIAL PRIMARY KEY,
     email TEXT NOT NULL UNIQUE ,
-    password TEXT,
     name TEXT,
-    admin BOOLEAN NOT NULL,
+    picture TEXT,
+    admin BOOLEAN NOT NULL DEFAULT FALSE,
     last_login TIMESTAMP,
-    is_active BOOLEAN NOT NULL
+    is_active BOOLEAN NOT NULL DEFAULT TRUE
 );
 --;;
 
