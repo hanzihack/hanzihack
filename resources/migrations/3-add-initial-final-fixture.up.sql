@@ -62,7 +62,7 @@ VALUES  ('-', '-', null),
         ('i', 'i', null),
         ('a', 'a', null),
         ('e', 'e', null),
-        ('ê', 'ê', null),
+--      ('ê', 'ê', null),
         ('ai', 'ai', null),
         ('ei', 'ei', null),
         ('ao', 'ao', null),
@@ -70,6 +70,6 @@ VALUES  ('-', '-', null),
         ('an', 'an', null),
         ('en', 'en', 'n'),
         ('ang', 'ang', null),
-        ('eng', 'eng', 'ng'),
-        ('er', 'er', null);
+        ('eng', 'eng', 'ng');
+--      ('er', 'er', null);
 
