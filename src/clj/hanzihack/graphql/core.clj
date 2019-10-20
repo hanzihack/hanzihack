@@ -4,14 +4,16 @@
     [com.walmartlabs.lacinia.schema :as schema]
     [com.walmartlabs.lacinia :as lacinia]
     [com.walmartlabs.lacinia.resolve :as resolve]
-    [graphql-query.core :refer [graphql-query]]
-    [hanzihack.marilyn.initial.graphql :as initial]
-    [hanzihack.marilyn.final.graphql :as final]
     [clojure.data.json :as json]
     [clojure.edn :as edn]
     [clojure.java.io :as io]
     [ring.util.http-response :refer :all]
-    [mount.core :refer [defstate]]))
+    [mount.core :refer [defstate]]
+    [graphql-query.core :refer [graphql-query]]
+    [hanzihack.marilyn.initial.graphql :as initial]
+    [hanzihack.marilyn.final.graphql :as final]
+    [hanzihack.auth.facebook.graphql :as fb]
+    [hanzihack.user.graphql :as user]))
 
 
 (defn get-initial [{:keys [:initial_id]} args value]
@@ -69,7 +71,11 @@
                          :initial/resolve-list initial/get-list
                          :actor/resolve-list   list-actor
                          :final/resolve-list   final/get-list
-                         :location/resolve-list list-location})
+                         :location/resolve-list list-location
+
+                         ; user
+                         :facebook/login fb/login
+                         :user/me        user/me})
 
       schema/compile))
 

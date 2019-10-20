@@ -19,3 +19,5 @@ shadow-cljs.edn
 *.iml
 .idea/
 resources/public/assets/
+
+*.DS_Store
