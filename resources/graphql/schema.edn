@@ -50,7 +50,8 @@
                                :resolve :actor/resolve}
                        :area {:type area
                               :resolve :area/resolve}}}
-  :user {:fields {:email {:type String}
+  :user {:fields {:id {:type Int}
+                  :email {:type String}
                   :name {:type String}
                   :picture {:type String}}}}
 

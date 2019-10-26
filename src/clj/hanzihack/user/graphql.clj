@@ -1,8 +1,16 @@
-(ns hanzihack.user.graphql)
+(ns hanzihack.user.graphql
+  (:require
+    [hanzihack.auth.facebook.svc :as fb]
+    [hanzihack.user.svc :as u]))
 
 
-(defn me [ctx _ _]
-  {:id 0
-   :name "Ziko"
-   :email "email@domain.com"
-   :photo "https://graph.facebook.com/3080860635262374/picture"})
+(defn fblogin [{:keys [session]} {:keys [access_token]} _]
+  (let [result (fb/retrieve access_token)
+        params   (merge result
+                        {:picture (get-in result [:picture :data :url])})
+        user (u/create params)]
+    user))
+
+
+(defn me [{:keys [session]} _ _]
+  (:identity session))

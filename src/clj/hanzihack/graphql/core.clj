@@ -7,13 +7,13 @@
     [clojure.data.json :as json]
     [clojure.edn :as edn]
     [clojure.java.io :as io]
-    [ring.util.http-response :refer :all]
+    [ring.util.http-response :as res]
     [mount.core :refer [defstate]]
     [graphql-query.core :refer [graphql-query]]
     [hanzihack.marilyn.initial.graphql :as initial]
     [hanzihack.marilyn.final.graphql :as final]
-    [hanzihack.auth.facebook.graphql :as fb]
-    [hanzihack.user.graphql :as user]))
+    [hanzihack.user.graphql :as user]
+    [clojure.tools.logging :as log]))
 
 
 (defn get-initial [{:keys [:initial_id]} args value]
@@ -74,7 +74,7 @@
                          :location/resolve-list list-location
 
                          ; user
-                         :facebook/login fb/login
+                         :facebook/login user/fblogin
                          :user/me        user/me})
 
       schema/compile))
@@ -87,12 +87,27 @@
   ([query vars context]
    (lacinia/execute compiled-schema query vars context)))
 
-(defn execute-request [query]
-  (let [vars nil
-        ;; TODO: receive context as args, <- send from route {:user-id x}
-        context {:user-id 1}]
-    (-> (execute query vars context)
-        (json/write-str))))
+
+(defn execute-request [req]
+  (let [query  (-> req :body slurp)
+        vars nil
+        session (:session req)
+        context {:session (merge session)}]
+
+    (let [result   (execute query vars context)]
+      ;; TODO: I dont know how to update a session in graphql resolver yet T^T
+      ;; TODO: don't check for facebook_login on gql-result and the set a session
+      (let [user (into {} (get-in result [:data :facebook_login]))
+            new-session (if-not (empty? user)
+                          (do
+                            (log/debug :fb-login user)
+                            (assoc session :identity user))
+                          session)]
+        (-> {:status 200
+             :headers {}
+             :session new-session
+             :body (json/write-str result)}
+            (res/header "X-Wow-Value" "wow"))))))
 
 
 ;; ----------
