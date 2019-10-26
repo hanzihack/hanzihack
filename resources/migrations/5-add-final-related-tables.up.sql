@@ -1,6 +1,7 @@
 CREATE TABLE marilyn.locations (
     id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL ,
+    note TEXT,
     image TEXT,
     final_id BIGINT REFERENCES marilyn.finals(id),
     user_id BIGINT REFERENCES public.users(id),
