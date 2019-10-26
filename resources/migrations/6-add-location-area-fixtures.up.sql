@@ -1,18 +1,18 @@
 -- TODO Replace image placeholder
 
-INSERT INTO marilyn.locations (id, name, image, final_id, user_id)
-VALUES  (1, 'Ivy Ratchada', 'image1', 1, 1),
-        (2, 'The street', 'image2', 2, 1),
-        (3, 'Office', 'image3', 3, 1),
-        (4, 'Esplanade', 'image4', 4, 1),
-        (5, 'Fitness First', 'image5', 5, 1),
-        (6, 'Wine I love u', 'image6', 6, 1),
-        (7, 'Emquartier', 'image7', 7, 1),
-        (8, 'Century Onnut', 'image8', 8, 1),
-        (9, 'Fortune Town', 'image9', 9, 1),
-        (10, 'AIA Building', 'image10', 10, 1),
-        (11, 'Esplanade COCO', 'image11', 11, 1),
-        (12, 'MBK', 'image12', 12, 1);
+INSERT INTO marilyn.locations (name, image, final_id, user_id)
+VALUES  ('Ivy Ratchada', 'image1', 1, 1),
+        ('The street', 'image2', 2, 1),
+        ('Office', 'image3', 3, 1),
+        ('Esplanade', 'image4', 4, 1),
+        ('Fitness First', 'image5', 5, 1),
+        ('Wine I love u', 'image6', 6, 1),
+        ('Emquartier', 'image7', 7, 1),
+        ('Century Onnut', 'image8', 8, 1),
+        ('Fortune Town', 'image9', 9, 1),
+        ('AIA Building', 'image10', 10, 1),
+        ('Esplanade COCO', 'image11', 11, 1),
+        ('MBK', 'image12', 12, 1);
 
 --;;
 

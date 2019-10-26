@@ -8,7 +8,7 @@
   (try
     (first (jdbc/insert! *db* :marilyn.actors actor))
     (catch Exception e
-      (log/infof "cant create new actor - $s %s" actor e)
+      (log/infof "cant create new actor - %s %s" actor e)
       (jdbc/update! *db* :marilyn.actors
                     (select-keys actor [:name :note :image])
                     ["initial_id=? AND user_id=?" initial_id user_id])
