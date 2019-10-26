@@ -46,6 +46,7 @@
                  [thheller/shadow-cljs "2.8.39" :scope "provided"]
                  [honeysql "0.9.8"]
                  [venantius/accountant "0.2.4"]
+                 [clj-http "3.10.0"]
                  [reagent-utils "0.3.3"]
                  [syn-antd "1.0.4"]
                  [district0x/graphql-query "1.0.6"]]

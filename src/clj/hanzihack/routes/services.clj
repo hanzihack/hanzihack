@@ -51,7 +51,8 @@
    ["/ping"
     {:get (constantly (ok {:message "pong"}))}]
    
-   ["/graphql" {:post (fn [req] (ok (graphql/execute-request (-> req :body slurp))))}]
+   ["/graphql" {:post (fn [req]
+                        (graphql/execute-request req))}]
 
    ["/files"
     {:swagger {:tags ["files"]}}

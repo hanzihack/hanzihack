@@ -101,7 +101,7 @@
 <!-- begin:: Header Mobile -->
 <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
     <div class="kt-header-mobile__logo">
-        <a href="index.html">
+        <a href="/">
             <img alt="Logo" height="30px" src="/img/logo.svg" />
         </a>
     </div>
@@ -167,7 +167,7 @@
 
                     <!-- begin:: Brand -->
                     <div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
-                        <a class="kt-header__brand-logo" href="?page=index">
+                        <a class="kt-header__brand-logo" href="/">
                             <img alt="Logo" height="30px" src="/img/logo.svg" />
                         </a>
                     </div>
@@ -175,64 +175,42 @@
                     <!-- end:: Brand -->
 
                     <!-- begin:: Header Topbar -->
+
                     <div class="kt-header__topbar kt-grid__item">
 
-                        <!--begin: Search -->
-                        <div class="kt-header__topbar-item kt-header__topbar-item--search dropdown" id="kt_quick_search_toggle">
+                        <div id="guest-menu" class="kt-header__topbar-item kt-header__topbar-item--user">
                             <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
-                                <span class="kt-header__topbar-icon"><i class="flaticon2-search-1"></i></span>
+                                <span class="kt-header__topbar-welcome kt-visible-desktop">Hi,</span>
+                                <span class="kt-header__topbar-username kt-visible-desktop">Guest</span>
+                                <img alt="Pic" src="https://www.gravatar.com/avatar/" />
+                                <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+                                <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold kt-hidden">S</span>
                             </div>
-                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-lg">
-                                <div class="kt-quick-search kt-quick-search--dropdown kt-quick-search--result-compact" id="kt_quick_search_dropdown">
-                                    <form method="get" class="kt-quick-search__form">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend"><span class="input-group-text"><i class="flaticon2-search-1"></i></span></div>
-                                            <input type="text" class="form-control kt-quick-search__input" placeholder="Search...">
-                                            <div class="input-group-append"><span class="input-group-text"><i class="la la-close kt-quick-search__close"></i></span></div>
-                                        </div>
-                                    </form>
-                                    <div class="kt-quick-search__wrapper kt-scroll" data-scroll="true" data-height="325" data-mobile-height="200">
+                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
+                                <div class="kt-user-card kt-user-card--skin-light kt-notification-item-padding-x">
+                                    <div class="kt-user-card__avatar">
+                                        <img class="kt-hidden-" alt="Pic" src="https://www.gravatar.com/avatar/" />
+                                        <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+                                        <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold kt-hidden">S</span>
+                                    </div>
+                                    <div class="kt-user-card__name">
+                                        Guest
+                                    </div>
+                                    <div class="kt-user-card__badge">
+                                        <button class="btn btn-label-primary btn-sm btn-bold btn-font-md" onclick="loginWithFB()">Log in</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!--end: Search -->
 
-                        <!--begin: Language bar -->
-                        <div class="kt-header__topbar-item kt-header__topbar-item--langs">
-                            <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
-										<span class="kt-header__topbar-icon">
-											<img class="" src="assets/media/flags/020-flag.svg" alt="" />
-										</span>
-                            </div>
-                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">
-                                <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">
-                                    <li class="kt-nav__item kt-nav__item--active">
-                                        <a href="#" class="kt-nav__link">
-                                            <span class="kt-nav__link-icon"><img src="assets/media/flags/020-flag.svg" alt="" /></span>
-                                            <span class="kt-nav__link-text">English</span>
-                                        </a>
-                                    </li>
-                                    <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link">
-                                            <span class="kt-nav__link-icon"><img src="assets/media/flags/016-spain.svg" alt="" /></span>
-                                            <span class="kt-nav__link-text">Spanish</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!--end: Language bar -->
 
                         <!--begin: User bar -->
-                        <div class="kt-header__topbar-item kt-header__topbar-item--user">
+                        <div id="user-menu" class="kt-header__topbar-item kt-header__topbar-item--user">
                             <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                                 <span class="kt-header__topbar-welcome kt-visible-desktop">Hi,</span>
                                 <span class="kt-header__topbar-username kt-visible-desktop">Nick</span>
-                                <img alt="Pic" src="assets/media/users/300_21.jpg" />
-
+                                <img alt="Pic" src="{{user-image}}" />
                                 <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
                                 <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold kt-hidden">S</span>
                             </div>
@@ -258,6 +236,19 @@
 
                                 <!--begin: Navigation -->
                                 <div class="kt-notification">
+                                    <div href="custom/apps/user/profile-1/personal-information.html" class="kt-notification__item">
+                                        <div class="kt-notification__item-icon">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </div>
+                                        <div class="kt-notification__item-details">
+                                            <div class="kt-notification__item-title kt-font-bold">
+                                                Log in with Facebook
+                                            </div>
+                                            <div class="kt-notification__item-time">
+                                                Log in to do more
+                                            </div>
+                                        </div>
+                                    </div>
                                     <a href="custom/apps/user/profile-1/personal-information.html" class="kt-notification__item">
                                         <div class="kt-notification__item-icon">
                                             <i class="flaticon2-calendar-3 kt-font-success"></i>
@@ -1021,6 +1012,68 @@
 
 <!--end::Page Scripts -->
 
+
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-auth.js"></script>
+
+<script src="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.css" />
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAPOME-HfEIe2yvmrzwmaccb9ZLeGRbQJw",
+        authDomain: "hanzi-hack.firebaseapp.com",
+        databaseURL: "https://hanzi-hack.firebaseio.com",
+        projectId: "hanzi-hack",
+        storageBucket: "hanzi-hack.appspot.com",
+        messagingSenderId: "564547779700",
+        appId: "1:564547779700:web:57d122c0bd6da706192521",
+        measurementId: "G-DJ9KRCFRP8"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    function loginWithFB() {
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithRedirect(provider);
+    }
+
+    function getLoginResult(){
+        firebase.auth().getRedirectResult().then(function(result) {
+            if (result.credential) {
+                // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                var token = result.credential.accessToken;
+                // ...
+                console.log(token)
+            }
+            // The signed-in user info.
+            var user = result.user;
+            console.debug('getLoginRedirectResult', result);
+            console.debug(user);
+            return result
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+            console.error(error);
+            return error
+        });
+    }
+
+    getLoginResult()
+
+</script>
+
+<a href="https://www.iubenda.com/privacy-policy/95925512" class="iubenda-white iubenda-embed" title="Privacy Policy ">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
 
 <script type="text/javascript">
     var csrfToken = "{{csrf-token}}";
