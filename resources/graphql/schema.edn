@@ -12,7 +12,9 @@
 
   :actor {:fields {:id   {:type Int}
                    :name {:type String}
+                   :note {:type String}
                    :image {:type String}
+                   :user_id {:type Int}
                    :initial_id {:type Int}
                    :initial {:type :initial
                              :resolve :initial/resolve}}
@@ -79,7 +81,13 @@
  {
   :facebook_login {:type :user
                    :args {:access_token {:type String}}
-                   :resolve :facebook/login}}}
+                   :resolve :facebook/login}
+  :create_actor {:type :actor
+                 :args {:name {:type String}
+                        :note {:type String}
+                        :image {:type String}
+                        :initial_id {:type Int}}
+                 :resolve :actor/create}}}
 
 
 
