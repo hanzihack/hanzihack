@@ -28,7 +28,9 @@
 
   :location {:fields {:id {:type Int}
                       :name {:type String}
+                      :note {:type String}
                       :image {:type String}
+                      :user_id {:type Int}
                       :final_id {:type Int}
                       :final {:type :final
                               :resolve :final/resolve}
@@ -82,12 +84,20 @@
   :facebook_login {:type :user
                    :args {:access_token {:type String}}
                    :resolve :facebook/login}
+
   :create_actor {:type :actor
                  :args {:name {:type String}
                         :note {:type String}
                         :image {:type String}
                         :initial_id {:type Int}}
-                 :resolve :actor/create}}}
+                 :resolve :actor/create}
+
+  :create_location {:type :location
+                    :args {:name {:type String}
+                           :note {:type String}
+                           :image {:type String}
+                           :final_id {:type Int}}
+                    :resolve :location/create}}}
 
 
 

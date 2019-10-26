@@ -13,6 +13,7 @@
     [hanzihack.marilyn.initial.graphql :as initial]
     [hanzihack.marilyn.final.graphql :as final]
     [hanzihack.marilyn.actor.graphql :as actor]
+    [hanzihack.marilyn.location.graphql :as location]
     [hanzihack.user.graphql :as user]
     [clojure.tools.logging :as log]))
 
@@ -71,11 +72,14 @@
                          ; queries
                          :initial/resolve-list initial/get-list
                          :final/resolve-list   final/get-list
-                         :location/resolve-list list-location
 
                          ; actor
                          :actor/resolve-list   list-actor
                          :actor/create   actor/create
+
+                         ; location
+                         :location/resolve-list list-location
+                         :location/create  location/create
 
                          ; user
                          :facebook/login user/fblogin

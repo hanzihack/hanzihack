@@ -10,7 +10,7 @@
   (try
     (first (jdbc/insert! *db* :users (select-keys user [:email :name :picture])))
     (catch Exception e
-      (log/errorf "create new user - %s" email)
+      (log/errorf "create new user - %s %s" email e)
       (first (jdbc/query *db* (sql/format {:select [:*]
                                            :from [:users]
                                            :where [:= :email email]}))))))
