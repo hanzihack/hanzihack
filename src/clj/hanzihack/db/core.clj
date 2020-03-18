@@ -5,7 +5,8 @@
     [clojure.tools.logging :as log]
     [conman.core :as conman]
     [java-time :as jt]
-    [hanzihack.config :as cfg]
+    [java-time.pre-java8]
+    [hanzihack.config :refer [env]]
     [mount.core :refer [defstate]])
   (:import org.postgresql.util.PGobject
            java.sql.Array
@@ -15,7 +16,7 @@
             BatchUpdateException
             PreparedStatement]))
 (defstate ^:dynamic *db*
-  :start (if-let [jdbc-url (cfg/database-url)]
+  :start (if-let [jdbc-url (env :database-url)]
            (conman/connect! {:jdbc-url jdbc-url})
            (do
              (log/warn "database connection URL was not found, please set :database-url in your config, e.g: dev-config.edn")

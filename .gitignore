@@ -18,6 +18,10 @@ shadow-cljs.edn
 /log
 *.iml
 .idea/
-resources/public/assets/
+resources/public/media/
 
 *.DS_Store
+
+resources/cedict.json
+
+resources/cedict.u8

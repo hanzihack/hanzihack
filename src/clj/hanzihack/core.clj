@@ -4,7 +4,7 @@
     [hanzihack.nrepl :as nrepl]
     [luminus.http-server :as http]
     [luminus-migrations.core :as migrations]
-    [hanzihack.config :as cfg]
+    [hanzihack.config :refer [env]]
     [clojure.tools.cli :refer [parse-opts]]
     [clojure.tools.logging :as log]
     [mount.core :as mount])
@@ -25,18 +25,17 @@
 (mount/defstate ^{:on-reload :noop} http-server
   :start
   (http/start
-    (-> cfg/env
+    (-> env
         (assoc  :handler (handler/app))
-        (update :io-threads #(or % (* 2 (.availableProcessors (Runtime/getRuntime)))))
-        (update :port #(or (-> cfg/env :options :port) %))))
+        (update :port #(or (-> env :options :port) %))))
   :stop
   (http/stop http-server))
 
 (mount/defstate ^{:on-reload :noop} repl-server
   :start
-  (when (cfg/nrepl-port)
-    (nrepl/start {:bind (cfg/nrepl-bind)
-                  :port (cfg/nrepl-port)}))
+  (when (env :nrepl-port)
+    (nrepl/start {:bind (env :nrepl-bind)
+                  :port (env :nrepl-port)}))
   :stop
   (when repl-server
     (nrepl/stop repl-server)))
@@ -58,17 +57,17 @@
 (defn -main [& args]
   (mount/start #'hanzihack.config/env)
   (cond
-    (nil? (cfg/database-url))
+    (nil? (:database-url env))
     (do
       (log/error "Database configuration not found, :database-url environment variable must be set before running")
       (System/exit 1))
     (some #{"init"} args)
     (do
-      (migrations/init (select-keys cfg/env [:database-url :init-script]))
+      (migrations/init (select-keys env [:database-url :init-script]))
       (System/exit 0))
     (migrations/migration? args)
     (do
-      (migrations/migrate args (select-keys cfg/env [:database-url]))
+      (migrations/migrate args (select-keys env [:database-url]))
       (System/exit 0))
     :else
     (start-app args)))
